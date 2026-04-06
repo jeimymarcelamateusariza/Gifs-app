@@ -2,39 +2,10 @@ import { Header } from "./gifs/components/Header";
 import { Search } from "./gifs/components/Search";
 import { PreviousSearch } from "./gifs/components/PreviousSearch";
 import { GifList } from "./gifs/components/gifs/GifList";
-import { useState } from "react";
-
-import { getGifsByQuery } from "./gifs/actions/get-gifs-by-query.actions";
-import type { Gif } from "./gifs/interfaces/gif.interface";
+import { useGifs } from "./gifs/hooks/useGifs";
 
 export const GifsApp = () => {
-  const [gifs, setGifs] = useState<Gif[]>([]);
-
-  const [previousTerms, setpreviousTerms] = useState<string[]>([]);
-
-  const handleTermClicked = (term: string) => {
-    console.log("Termino clicked:", term);
-  };
-
-  const handleSearch = async (query: string) => {
-    query = query.trim().toLowerCase();
-
-    //validar que el query no este vacio
-    if (query.length === 0) return;
-
-    //Evitar búsquedas duplicadas en el historial
-    if (previousTerms.includes(query)) return;
-
-    //Actualizar previousTerms con el nuevo término y limitarlo a 7 términos
-    setpreviousTerms([query, ...previousTerms].slice(0, 6));
-
-    await getGifsByQuery(query);
-
-    const gifs = await getGifsByQuery(query);
-
-    console.log({ gifs });
-    setGifs(gifs);
-  };
+  const { gifs, previousTerms, handleTermClicked, handleSearch } = useGifs();
 
   return (
     <>
