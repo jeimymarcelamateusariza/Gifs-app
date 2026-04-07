@@ -16,6 +16,7 @@ export const GifsApp = () => {
             background:
               "linear-gradient(135deg, #07000F 0%, #0D001A 50%, #050010 100%)",
             width: "100%",
+            minHeight: "100%",
             height: "auto",
           }}
         >
